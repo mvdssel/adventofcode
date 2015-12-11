@@ -7,14 +7,15 @@
     using std::string;
 
 int main(int argc, char** argv) {
-    const string filename = "input.txt";
+    const char* filename = "input.txt";
 
-    char ch;
     int elevation = 0;
     int pos = 1;
     bool enteredBasement = false;
 
-    fstream fin(filename.c_str(), fstream::in);
+    char ch;
+    fstream fin(filename, fstream::in);
+
     while (fin >> ch) {
         if(ch == '(') elevation++;
         if(ch == ')') elevation--;

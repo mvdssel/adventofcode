@@ -18,9 +18,9 @@
     using std::sort;
 
 int main(int argc, char** argv) {
-    const string filename = "input.txt";
+    const char* filename = "input.txt";
 
-    fstream ifs(filename.c_str(), fstream::in);
+    fstream ifs(filename, fstream::in);
     string line;
 
     smatch lwhMatch;
