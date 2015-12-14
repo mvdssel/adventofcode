@@ -15,22 +15,20 @@ int main(int argc, char** argv) {
     fstream ifs(filename, fstream::in);
     string candidate;
 
-    regex vowelRgx("[aeiou].*[aeiou].*[aeiou]");
-    regex doubleRgx("(.)\\1");
-    regex badRgx("(ab|cd|pq|xy)");
+    regex doublePairRgx("(..).*\\1");
+    regex letterRepeatRgx("(.).\\1");
 
     int niceCnt = 0;
 
     while(getline(ifs, candidate)) {
-        if(regex_search(candidate, doubleRgx) && 
-           regex_search(candidate, vowelRgx)  &&
-          !regex_search(candidate, badRgx))
+        if(regex_search(candidate, doublePairRgx) && 
+           regex_search(candidate, letterRepeatRgx)) {
             niceCnt++;
             // cout << candidate << endl;
+        }
     }
 
     cout << "We found " << niceCnt << " nice strings!" << endl;
 
     return 0;
 } 
-
