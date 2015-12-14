@@ -14,7 +14,8 @@
 #include <utility>
     using std::pair;
     using std::make_pair;
-
+#include <algorithm>
+    using std::max;
 
 const char* filename = "input.txt";
 const int LIGHT_CNT = 1000;
@@ -25,23 +26,23 @@ int main(int argc, char** argv) {
     string cmd;
 
     // Init light grid
-    bool lights[LIGHT_CNT][LIGHT_CNT];
-    for(int i = 0; i < LIGHT_CNT; i++) {
-        for(int j = 0; j < LIGHT_CNT; j++) {
-            lights[i][j] = false;
+    int lights[LIGHT_CNT][LIGHT_CNT];
+    for(int x = 0; x < LIGHT_CNT; x++) {
+        for(int y = 0; y < LIGHT_CNT; y++) {
+            lights[x][y] = 0;
         }
     }
 
     // Init actions
-    map<string, std::function<void(bool &light)>> actions;
-    actions.insert(make_pair("turn on",  [] (bool &light) { light = 1;      }));
-    actions.insert(make_pair("turn off", [] (bool &light) { light = 0;      }));
-    actions.insert(make_pair("toggle",   [] (bool &light) { light = !light; }));
+    map<string, std::function<void(int &light)>> actions;
+    actions.insert(make_pair("turn on",  [] (int &light) { light += 1;                }));
+    actions.insert(make_pair("turn off", [] (int &light) { light = max(light - 1, 0); }));
+    actions.insert(make_pair("toggle",   [] (int &light) { light += 2;                }));
 
     // Init regex
     regex cmdRgx ("(.+) (\\d+),(\\d+) through (\\d+),(\\d+)");
     smatch cmdMatch;
-    std::function<void(bool &light)> action;
+    std::function<void(int &light)> action;
     int x1, y1,
         x2, y2;
 
@@ -61,14 +62,14 @@ int main(int argc, char** argv) {
         }
     }
 
-    int totalOn = 0;
+    int totalBrightness = 0;
     for(int x = 0; x < LIGHT_CNT; x++) {
         for(int y = 0; y < LIGHT_CNT; y++) {
-            totalOn += lights[x][y];
+            totalBrightness += lights[x][y];
         }
     }
 
-    cout << "We lit about " << totalOn << " lights!" << endl;
+    cout << "We lit lights for a total of " << totalBrightness << " bright stars!" << endl;
 
     return 0;
 } 
