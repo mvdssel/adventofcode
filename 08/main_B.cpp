@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
         total += line.size();
     }
 
-    cout << total << endl;
+    cout << "We increased the length of all our strings with " << total << " characters!" << endl;
 
     return 0;
 }
