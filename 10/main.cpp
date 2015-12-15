@@ -24,22 +24,19 @@ int main(int argc, char **argv) {
 string lookAndSay(const string &input) {
     stringstream output;
 
-    // make an initial calculation
-    char current = input[0];
-    int total = 1;
-
     // continue from the second char
+    int total = 1;
     for(int i = 1; i < input.size(); i++) {
-        if(input[i] == current)
+        if(input[i-1] == input[i])
             total++;
         else {
-            output << total << current;
-            current = input[i];
+            output << total << input[i-1];
             total = 1;
         }
     }
-    // also append the last calculation
-    output << total << current;
+
+    // also append the last check
+    output << total << input[input.size() - 1];
 
     return output.str();
 }
