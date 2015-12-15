@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
     actions.insert(make_pair("RSHIFT", [] (Wire *a, Wire *b) { return a->getValue() >> b->getValue(); }));
     actions.insert(make_pair("LSHIFT", [] (Wire *a, Wire *b) { return a->getValue() << b->getValue(); }));
 
-    // Init regex: a=3        ACTION=4     b=5    -> dest=6
+    // Init regex: a(3        action(4     b(5     dest(6
     regex cmdRgx ("(((\\w+) )?([A-Z]+) )?(\\w+) -> (\\w+)");
     smatch cmdMatch;
     std::function<ushort(Wire *a, Wire *b)> action;
