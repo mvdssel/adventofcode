@@ -5,15 +5,6 @@
 
 using namespace std;
 
-template <typename T>
-ostream& operator << (ostream &os, const vector<T> &v) {
-    auto it = v.begin();
-    while(it != v.end()) {
-        cout << (*it++) << " ";
-    }
-    return os;
-}
-
 struct candidate {
     int capacity;                 // acquired capacity from previously added containers
     int searchIndex;              // from where do we start searching for extra containers
