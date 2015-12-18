@@ -7,9 +7,9 @@
 using namespace std;
 
 struct candidate {
-    int containerCnt;             // amount of containers used to acquire the capacity of this candidate search
-    int capacity;                 // acquired capacity from previously added containers
-    int searchIndex;              // from where do we start searching for extra containers
+    int containerCnt; // amount of containers used to acquire the capacity of this candidate search
+    int capacity;     // acquired capacity from previously added containers
+    int searchIndex;  // from where do we start searching for extra containers
 };
 
 int main(int argc, char *argv[]) {
