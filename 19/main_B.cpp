@@ -7,8 +7,8 @@
 
 using namespace std;
 
-// const string input = "input.txt";
-const string input = "test.txt";
+const string input = "input.txt";
+// const string input = "test.txt";
 const string startMolecule = "e";
 
 set<string> getReplacements(const string &startMolecule, const unordered_multimap<string, string> &replacements) {
@@ -36,47 +36,51 @@ set<string> getReplacements(const string &startMolecule, const unordered_multima
     return molecules; // uses RVO
 }
 
-bool operator < (const pair<string, int> &a, const pair<string, int> &b) {
-    return a.second < b.second;
-}
+struct lenCompare {
+    bool operator() (const string& a, const string& b) const{
+        return a.size() > b.size();
+    }
+};
 
 int main(int argc, char *argv[]) {
     fstream ifs(input, fstream::in);
     string from, s, to;
 
-    unordered_multimap<string, string> replacements;
+    multimap<string, string, lenCompare> replacements;
     while(ifs >> from >> s >> to) {
-        replacements.insert(make_pair(from, to));
+        replacements.insert(make_pair(to, from));
     }
-    
-    const string medicineMolecule = from;
-    
-    multimap<int, string> newMolecules; // <steps to produce, molecule>
-    newMolecules.insert(make_pair(0, startMolecule));
-    set<string> researchedMolecules;
 
-    bool found = false;
-
-    while(!newMolecules.empty() && !found) {
-        map<int, string>::iterator researchedMol = newMolecules.begin();
-        researchedMolecules.insert(researchedMol->second);
-        set<string> resultMolecules = getReplacements(researchedMol->second, replacements);
-
-        for(const string &result : resultMolecules) {
-            if(result.size() < medicineMolecule.size() &&
-               researchedMolecules.find(result) == researchedMolecules.end()
-            ) {
-                newMolecules.insert(make_pair(researchedMol->first + 1, result));
-            }
-            else if(result.size() == medicineMolecule.size() && result.compare(medicineMolecule) == 0) {
-                found = true;
-                cout << "Created " << result << " in " << (researchedMol->first + 1) << " steps!" << endl;
-            }
-            // else: already researched or exceeding size of the target molecule
-        }
-
-        newMolecules.erase(researchedMol);
+    for(auto v : replacements) {
+        cout << v.first << ":" << v.second << endl;
     }
+
+    while(:qa
     
-    return 0;
+    // const string medicineMolecule = from;
+    //
+    // multimap<int, string> newMolecules; // <steps to produce, molecule>
+    // newMolecules.insert(make_pair(0, startMolecule));
+    //
+    // bool found = false;
+    //
+    // while(!newMolecules.empty() && !found) {
+    //     map<int, string>::iterator researchedMol = newMolecules.begin();
+    //     set<string> resultMolecules = getReplacements(researchedMol->second, replacements);
+    //
+    //     for(const string &result : resultMolecules) {
+    //         if(result.size() < medicineMolecule.size()) {
+    //             newMolecules.insert(make_pair(researchedMol->first + 1, result));
+    //         }
+    //         else if(result.size() == medicineMolecule.size() && result.compare(medicineMolecule) == 0) {
+    //             found = true;
+    //             cout << "Created " << result << " in " << (researchedMol->first + 1) << " steps!" << endl;
+    //         }
+    //         // else: already researched or exceeding size of the target molecule
+    //     }
+    //
+    //     newMolecules.erase(researchedMol);
+    // }
+    //
+    // return 0;
 }
